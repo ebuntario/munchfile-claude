@@ -1,0 +1,15 @@
+{
+  "name": "munchfile-claude",
+  "owner": {
+    "name": "Ethan Buntario",
+    "url": "https://munchfile.dev"
+  },
+  "plugins": [
+    {
+      "name": "munchfile",
+      "source": "./",
+      "description": "Share local markdown and HTML files as live URLs using the munchfile CLI.",
+      "version": "0.1.0"
+    }
+  ]
+}
