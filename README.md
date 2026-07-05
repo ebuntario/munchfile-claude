@@ -1,4 +1,4 @@
-# munchfile for Claude Code
+# MunchFile for Claude Code
 
 Share a local markdown or HTML file as a live URL — just by asking Claude.
 
@@ -42,7 +42,7 @@ That's it. Ask Claude to share a file.
 
 ## Links
 
-- [munchfile.dev](https://munchfile.dev) — product homepage
+- [munchfile.com](https://www.munchfile.com) — product homepage
 - [munchfile-cli](https://github.com/ebuntario/munchfile-cli) — open source CLI
 
 ## License

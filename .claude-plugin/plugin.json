@@ -4,7 +4,7 @@
   "description": "Share local markdown and HTML files as live URLs using the munchfile CLI. Claude watches the file, uploads it, and returns a persistent link that stays current on every save.",
   "author": {
     "name": "Ethan Buntario",
-    "url": "https://munchfile.dev"
+    "url": "https://www.munchfile.com"
   },
   "license": "MIT",
   "keywords": [
