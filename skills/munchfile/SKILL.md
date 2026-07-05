@@ -33,19 +33,43 @@ Normalize the file extension to lowercase before comparing. munchfile supports: 
 
 If the file has a different extension (after lowercasing), say so and stop.
 
-## Step 3 — Watch the file
+## Step 3 — Choose visibility (map the user's intent)
 
-Resolve the absolute path of the file. Then:
+A munchfile link has three visibility levels. With **no flag the link is private**, and a private link can only be opened by the user themselves — anyone they send it to hits a "request access" wall. Most people who ask to "share" a file actually want **unlisted**. Pick the flag from what the user said:
+
+| The user's ask sounds like… | Flag | Who can open the link |
+|---|---|---|
+| "just for me", "private", "keep it personal", or gives no audience at all | *(none — private)* | Only the user; recipients must request access |
+| "share with", "send to", "give someone", "anyone with the link", "unlisted" | `--unlisted` | Anyone with the link; not shown in search |
+| "publish", "make it public", "put it on my profile" | `--public` | Anyone; indexable in search and listed on the profile |
+
+- If the ask clearly implies unlisted or public, pass that flag.
+- If it's a bare "share this file" with no audience cue, use the private default (safe) — but you MUST surface the unlisted option when you report the link (Step 5). Do not silently hand back a private link the recipient can't open.
+
+## Step 4 — Watch the file
+
+Resolve the absolute path of the file. Then (add `--unlisted` or `--public` only when Step 3 selected it):
 
 ```bash
-munchfile watch <absolute-path>
+munchfile watch <absolute-path> [--unlisted|--public]
 ```
 
-## Step 4 — Parse the URL
+## Step 5 — Parse the URL and report visibility
 
 Split stdout on newlines. Test each line against: `^✅ Live: (https?://\S+)$`
 
-The first matching line's capture group is the live URL — share it with the user.
+The first matching line's capture group is the live URL. When you share it, say what its visibility means in one plain sentence so the user isn't surprised:
+
+- **private:** "This link is private — only you can open it. Want it unlisted so anyone with the link can view? I can switch it and the URL stays the same."
+- **unlisted:** "This link is unlisted — anyone with the link can open it, and it won't show up in search."
+- **public:** "This link is public — anyone can open it, and it may appear in search and on your profile."
+
+**Changing visibility later:** re-running `munchfile watch` with a different flag does NOT change an already-watched file (the CLI ignores the flag and says so). To switch, unwatch then re-watch with the flag — the live URL is preserved:
+
+```bash
+munchfile unwatch <absolute-path>
+munchfile watch <absolute-path> --unlisted
+```
 
 **If a line contains "Still munching":** the upload is in progress. Tell the user their URL will be ready shortly — they can run `munchfile watch <path>` again in 30 seconds to retrieve it once the upload completes.
 
